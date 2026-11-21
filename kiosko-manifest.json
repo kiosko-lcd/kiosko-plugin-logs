@@ -1,0 +1,1600 @@
+{
+  "manifest": 1,
+  "id": "logs",
+  "package": "kiosko-plugin-logs",
+  "name": {
+    "en": "Logs",
+    "es": "Logs",
+    "de": "Logs",
+    "zh-Hans": "日志",
+    "zh-Hant": "日誌"
+  },
+  "version": "0.1.0",
+  "description": {
+    "en": "Live logs on your panel: journald, log files, Docker, macOS, Windows, Kubernetes and Loki. Errors show as they happen, repeats fold, secrets are masked.",
+    "es": "Logs en vivo en tu panel: journald, archivos de log, Docker, macOS, Windows, Kubernetes y Loki. Los errores aparecen según ocurren, las repeticiones se agrupan y los secretos se ocultan.",
+    "de": "Live-Logs auf deinem Panel: journald, Logdateien, Docker, macOS, Windows, Kubernetes und Loki. Fehler erscheinen sofort, Wiederholungen werden zusammengefasst, Geheimnisse maskiert.",
+    "zh-Hans": "在面板上实时查看日志：journald、日志文件、Docker、macOS、Windows、Kubernetes 和 Loki。错误即时出现，重复行合并，机密信息被遮盖。",
+    "zh-Hant": "在面板上即時查看日誌：journald、日誌檔、Docker、macOS、Windows、Kubernetes 與 Loki。錯誤即時出現，重複行合併，機密資訊被遮蓋。"
+  },
+  "author": "Loksly",
+  "license": "MIT",
+  "homepage": "https://github.com/kiosko-lcd/kiosko-plugin-logs#readme",
+  "repository": "https://github.com/kiosko-lcd/kiosko-plugin-logs",
+  "icon": "scroll-text",
+  "sdk": "^0.2.0",
+  "platforms": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "languages": [
+    "en",
+    "es",
+    "de",
+    "zh-Hant",
+    "zh-Hans"
+  ],
+  "categories": [
+    "system"
+  ],
+  "tags": [
+    "logs",
+    "journald",
+    "docker",
+    "errors"
+  ],
+  "permissions": {
+    "exec": [
+      "journalctl",
+      "log",
+      "powershell",
+      "kubectl",
+      "user"
+    ],
+    "files": [
+      "user"
+    ],
+    "network": [
+      "user"
+    ],
+    "devices": [
+      "docker",
+      "journald"
+    ]
+  },
+  "riskyOptions": [
+    {
+      "path": "logs/journal: bin",
+      "risk": [
+        "exec"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/file: paths",
+      "risk": [
+        "path"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/docker: socket",
+      "risk": [
+        "path"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/macos: bin",
+      "risk": [
+        "exec"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/windows: bin",
+      "risk": [
+        "exec"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/kubernetes: context",
+      "risk": [
+        "network"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/kubernetes: bin",
+      "risk": [
+        "exec"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/loki: url",
+      "risk": [
+        "network"
+      ],
+      "secret": false
+    },
+    {
+      "path": "logs/loki: token",
+      "risk": [],
+      "secret": true
+    }
+  ],
+  "requires": [],
+  "optional": [],
+  "widgets": [
+    {
+      "type": "logs/tail",
+      "name": {
+        "en": "Live log",
+        "es": "Log en vivo",
+        "de": "Live-Log",
+        "zh-Hans": "实时日志",
+        "zh-Hant": "即時日誌"
+      },
+      "description": {
+        "en": "The end of your logs as they are written: errors in red, warnings in amber, repeats folded (×37), secrets masked.",
+        "es": "El final de tus logs según se escriben: errores en rojo, avisos en ámbar, repeticiones agrupadas (×37), secretos ocultos.",
+        "de": "Das Ende deiner Logs, während sie geschrieben werden: Fehler rot, Warnungen gelb, Wiederholungen zusammengefasst (×37), Geheimnisse maskiert.",
+        "zh-Hans": "实时显示日志的末尾：错误为红色，警告为琥珀色，重复行合并（×37），机密信息已遮盖。",
+        "zh-Hant": "即時顯示日誌的結尾：錯誤為紅色，警告為琥珀色，重複行合併（×37），機密資訊已遮蓋。"
+      },
+      "icon": "scroll-text",
+      "category": "system",
+      "tags": [
+        "logs",
+        "journald",
+        "docker"
+      ],
+      "size": {
+        "min": {
+          "w": 240,
+          "h": 80
+        },
+        "preferred": {
+          "w": 900,
+          "h": 300
+        }
+      },
+      "chrome": "card",
+      "sources": [
+        "logs/journal",
+        "logs/file",
+        "logs/docker",
+        "logs/macos",
+        "logs/windows",
+        "logs/kubernetes",
+        "logs/loki"
+      ],
+      "options": {
+        "default": {
+          "level": "info",
+          "units": [],
+          "messages": [],
+          "showUnits": true,
+          "showTime": true,
+          "rows": 0,
+          "layout": "auto",
+          "holdMs": 120000
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "level": {
+            "title": "Show",
+            "default": "info",
+            "x-ui": {
+              "label": {
+                "en": "Show",
+                "es": "Mostrar",
+                "de": "Zeigen",
+                "zh-Hans": "显示",
+                "zh-Hant": "顯示"
+              },
+              "labels": {
+                "error": {
+                  "en": "Errors",
+                  "es": "Errores",
+                  "de": "Fehler",
+                  "zh-Hans": "错误",
+                  "zh-Hant": "錯誤"
+                },
+                "warning": {
+                  "en": "Warnings and worse",
+                  "es": "Avisos y peor",
+                  "de": "Warnungen und schlimmer",
+                  "zh-Hans": "警告及以上",
+                  "zh-Hant": "警告及以上"
+                },
+                "notice": {
+                  "en": "Notices and worse",
+                  "es": "Notas y peor",
+                  "de": "Hinweise und schlimmer",
+                  "zh-Hans": "通知及以上",
+                  "zh-Hant": "通知及以上"
+                },
+                "info": {
+                  "en": "Information and worse",
+                  "es": "Información y peor",
+                  "de": "Informationen und schlimmer",
+                  "zh-Hans": "信息及以上",
+                  "zh-Hant": "資訊及以上"
+                },
+                "debug": {
+                  "en": "Everything",
+                  "es": "Todo",
+                  "de": "Alles",
+                  "zh-Hans": "全部",
+                  "zh-Hant": "全部"
+                }
+              }
+            },
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "notice",
+              "info",
+              "debug"
+            ]
+          },
+          "units": {
+            "title": "Units, containers, files",
+            "description": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Units, containers, files",
+                "es": "Unidades, contenedores, archivos",
+                "de": "Units, Container, Dateien",
+                "zh-Hans": "单元、容器、文件",
+                "zh-Hant": "單元、容器、檔案"
+              },
+              "help": {
+                "en": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+                "es": "Qué logs mostrar, por nombre: nginx.service, web, app.log; por tipo: journal/*, docker/*, file/*; y !cron para quitar uno. Vacío: todos.",
+                "de": "Welche Logs gezeigt werden, nach Name: nginx.service, web, app.log; nach Art: journal/*, docker/*, file/*; und !cron, um eines wegzulassen. Leer: alle.",
+                "zh-Hans": "按名称选择要显示的日志：nginx.service、web、app.log；按类型：journal/*、docker/*、file/*；用 !cron 排除某个。留空：全部。",
+                "zh-Hant": "依名稱選擇要顯示的日誌：nginx.service、web、app.log；依類型：journal/*、docker/*、file/*；用 !cron 排除某個。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "messages": {
+            "title": "Messages",
+            "description": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Messages",
+                "es": "Mensajes",
+                "de": "Meldungen",
+                "zh-Hans": "消息",
+                "zh-Hant": "訊息"
+              },
+              "help": {
+                "en": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+                "es": "Solo las líneas con estas palabras: timeout, refused; quita con !healthcheck; una expresión regular entre barras: /5\\d\\d/. Vacío: todas.",
+                "de": "Nur Zeilen mit diesen Wörtern: timeout, refused; weglassen mit !healthcheck; ein regulärer Ausdruck zwischen Schrägstrichen: /5\\d\\d/. Leer: alle Zeilen.",
+                "zh-Hans": "只显示含这些词的行：timeout、refused；用 !healthcheck 排除；斜杠之间写正则表达式：/5\\d\\d/。留空：全部。",
+                "zh-Hant": "只顯示含這些詞的行：timeout、refused；用 !healthcheck 排除；斜線之間寫正規表示式：/5\\d\\d/。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "showUnits": {
+            "title": "Show where each line comes from",
+            "default": true,
+            "x-ui": {
+              "label": {
+                "en": "Show where each line comes from",
+                "es": "Mostrar de dónde viene cada línea",
+                "de": "Zeigen, woher jede Zeile kommt",
+                "zh-Hans": "显示每行的来源",
+                "zh-Hant": "顯示每行的來源"
+              }
+            },
+            "type": "boolean"
+          },
+          "showTime": {
+            "title": "Show how long ago",
+            "default": true,
+            "x-ui": {
+              "label": {
+                "en": "Show how long ago",
+                "es": "Mostrar hace cuánto",
+                "de": "Zeigen, wie lange her",
+                "zh-Hans": "显示多久以前",
+                "zh-Hant": "顯示多久以前"
+              }
+            },
+            "type": "boolean"
+          },
+          "rows": {
+            "title": "Rows",
+            "description": "0 = as many as fit. A number shows that many, in rows of a readable size (fewer when the tile is too small for them); the rest are counted in \"+N more\".",
+            "default": 0,
+            "x-ui": {
+              "label": {
+                "en": "Rows",
+                "es": "Filas",
+                "de": "Zeilen",
+                "zh-Hant": "列數",
+                "zh-Hans": "行数"
+              },
+              "help": {
+                "en": "0 = as many as fit. A number shows that many, in rows of a readable size (fewer when the tile is too small for them); the rest are counted in \"+N more\".",
+                "es": "0 = las que quepan. Con un número se ven esas, en filas de un tamaño legible (menos si la tesela no da para ellas); el resto se cuenta en «+N más».",
+                "de": "0 = so viele, wie passen. Eine Zahl zeigt so viele, in Zeilen lesbarer Größe (weniger, wenn die Kachel dafür zu klein ist); der Rest wird als „+N weitere“ gezählt.",
+                "zh-Hant": "0 = 盡量放滿。填數字則顯示該數量，並以易讀的大小排列（方格太小時會減少）；其餘的計入「還有 N 個」。",
+                "zh-Hans": "0 = 尽量放满。填数字则显示该数量，并以易读的大小排列（格子太小时会减少）；其余的计入“还有 N 个”。"
+              }
+            },
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30
+          },
+          "layout": {
+            "title": "Row layout",
+            "description": "Automatic: the widget picks by the tile's shape.",
+            "default": "auto",
+            "x-ui": {
+              "label": {
+                "en": "Row layout",
+                "es": "Formato de fila",
+                "de": "Zeilenlayout",
+                "zh-Hant": "列版面",
+                "zh-Hans": "行布局"
+              },
+              "help": {
+                "en": "Automatic: the widget picks by the tile's shape.",
+                "es": "Automático: el widget elige según la forma de la tesela.",
+                "de": "Automatisch: Das Widget wählt nach der Form der Kachel.",
+                "zh-Hant": "自動：小工具依方格形狀選擇。",
+                "zh-Hans": "自动：小组件根据格子形状选择。"
+              },
+              "labels": {
+                "auto": {
+                  "en": "Automatic",
+                  "es": "Automático",
+                  "de": "Automatisch",
+                  "zh-Hant": "自動",
+                  "zh-Hans": "自动"
+                },
+                "one-line": {
+                  "en": "One line",
+                  "es": "Una línea",
+                  "de": "Eine Zeile",
+                  "zh-Hant": "單行",
+                  "zh-Hans": "单行"
+                },
+                "detailed": {
+                  "en": "Detailed",
+                  "es": "Detallado",
+                  "de": "Ausführlich",
+                  "zh-Hant": "詳細",
+                  "zh-Hans": "详细"
+                }
+              }
+            },
+            "type": "string",
+            "enum": [
+              "auto",
+              "one-line",
+              "detailed"
+            ]
+          },
+          "holdMs": {
+            "title": "An error keeps the tile for",
+            "description": "How long after an error the widget stays on its tile (urgent). 0: never.",
+            "default": 120000,
+            "x-ui": {
+              "label": {
+                "en": "An error keeps the tile for",
+                "es": "Un error se queda la tesela",
+                "de": "Ein Fehler hält die Kachel für",
+                "zh-Hans": "出错后占用格子",
+                "zh-Hant": "出錯後佔用方格"
+              },
+              "help": {
+                "en": "How long after an error the widget stays on its tile (urgent). 0: never.",
+                "es": "Cuánto tiempo después de un error se queda el widget en su tesela (urgente). 0: nunca.",
+                "de": "Wie lange das Widget nach einem Fehler auf seiner Kachel bleibt (dringend). 0: nie.",
+                "zh-Hans": "出错后小组件在格子上停留多久（紧急）。0：从不。",
+                "zh-Hant": "出錯後小工具在方格上停留多久（緊急）。0：從不。"
+              },
+              "unit": "ms"
+            },
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400000
+          }
+        }
+      },
+      "screenshot": "docs/tail.png",
+      "animated": false,
+      "urgent": true
+    },
+    {
+      "type": "logs/rate",
+      "name": {
+        "en": "Errors per minute",
+        "es": "Errores por minuto",
+        "de": "Fehler pro Minute",
+        "zh-Hans": "每分钟错误数",
+        "zh-Hant": "每分鐘錯誤數"
+      },
+      "description": {
+        "en": "A curve of the errors in your logs, minute by minute, and how many there were.",
+        "es": "Una curva de los errores de tus logs, minuto a minuto, y cuántos hubo.",
+        "de": "Eine Kurve der Fehler in deinen Logs, Minute für Minute, und wie viele es waren.",
+        "zh-Hans": "日志中错误数量的逐分钟曲线，以及总数。",
+        "zh-Hant": "日誌中錯誤數量的逐分鐘曲線，以及總數。"
+      },
+      "icon": "activity",
+      "category": "system",
+      "tags": [
+        "logs",
+        "errors"
+      ],
+      "size": {
+        "min": {
+          "w": 160,
+          "h": 80
+        },
+        "preferred": {
+          "w": 480,
+          "h": 200
+        }
+      },
+      "chrome": "card",
+      "sources": [
+        "logs/journal",
+        "logs/file",
+        "logs/docker",
+        "logs/macos",
+        "logs/windows",
+        "logs/kubernetes",
+        "logs/loki"
+      ],
+      "options": {
+        "default": {
+          "units": [],
+          "messages": [],
+          "includeWarnings": false,
+          "historyMs": 3600000,
+          "holdMs": 120000
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "units": {
+            "title": "Units, containers, files",
+            "description": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Units, containers, files",
+                "es": "Unidades, contenedores, archivos",
+                "de": "Units, Container, Dateien",
+                "zh-Hans": "单元、容器、文件",
+                "zh-Hant": "單元、容器、檔案"
+              },
+              "help": {
+                "en": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+                "es": "Qué logs mostrar, por nombre: nginx.service, web, app.log; por tipo: journal/*, docker/*, file/*; y !cron para quitar uno. Vacío: todos.",
+                "de": "Welche Logs gezeigt werden, nach Name: nginx.service, web, app.log; nach Art: journal/*, docker/*, file/*; und !cron, um eines wegzulassen. Leer: alle.",
+                "zh-Hans": "按名称选择要显示的日志：nginx.service、web、app.log；按类型：journal/*、docker/*、file/*；用 !cron 排除某个。留空：全部。",
+                "zh-Hant": "依名稱選擇要顯示的日誌：nginx.service、web、app.log；依類型：journal/*、docker/*、file/*；用 !cron 排除某個。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "messages": {
+            "title": "Messages",
+            "description": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Messages",
+                "es": "Mensajes",
+                "de": "Meldungen",
+                "zh-Hans": "消息",
+                "zh-Hant": "訊息"
+              },
+              "help": {
+                "en": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+                "es": "Solo las líneas con estas palabras: timeout, refused; quita con !healthcheck; una expresión regular entre barras: /5\\d\\d/. Vacío: todas.",
+                "de": "Nur Zeilen mit diesen Wörtern: timeout, refused; weglassen mit !healthcheck; ein regulärer Ausdruck zwischen Schrägstrichen: /5\\d\\d/. Leer: alle Zeilen.",
+                "zh-Hans": "只显示含这些词的行：timeout、refused；用 !healthcheck 排除；斜杠之间写正则表达式：/5\\d\\d/。留空：全部。",
+                "zh-Hant": "只顯示含這些詞的行：timeout、refused；用 !healthcheck 排除；斜線之間寫正規表示式：/5\\d\\d/。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "includeWarnings": {
+            "title": "Include warnings",
+            "default": false,
+            "x-ui": {
+              "label": {
+                "en": "Include warnings",
+                "es": "Incluir avisos",
+                "de": "Warnungen einbeziehen",
+                "zh-Hans": "包括警告",
+                "zh-Hant": "包括警告"
+              }
+            },
+            "type": "boolean"
+          },
+          "historyMs": {
+            "title": "Span",
+            "description": "How far back the curve goes (up to 24 h).",
+            "default": 3600000,
+            "x-ui": {
+              "label": {
+                "en": "Span",
+                "es": "Periodo",
+                "de": "Zeitraum",
+                "zh-Hans": "时间范围",
+                "zh-Hant": "時間範圍"
+              },
+              "help": {
+                "en": "How far back the curve goes (up to 24 h).",
+                "es": "Hasta cuándo atrás llega la curva (hasta 24 h).",
+                "de": "Wie weit die Kurve zurückreicht (bis 24 h).",
+                "zh-Hans": "曲线回溯多久（最多 24 小时）。",
+                "zh-Hant": "曲線回溯多久（最多 24 小時）。"
+              },
+              "unit": "ms"
+            },
+            "type": "integer",
+            "minimum": 600000,
+            "maximum": 86400000
+          },
+          "holdMs": {
+            "title": "An error keeps the tile for",
+            "description": "How long after an error the widget stays on its tile (urgent). 0: never.",
+            "default": 120000,
+            "x-ui": {
+              "label": {
+                "en": "An error keeps the tile for",
+                "es": "Un error se queda la tesela",
+                "de": "Ein Fehler hält die Kachel für",
+                "zh-Hans": "出错后占用格子",
+                "zh-Hant": "出錯後佔用方格"
+              },
+              "help": {
+                "en": "How long after an error the widget stays on its tile (urgent). 0: never.",
+                "es": "Cuánto tiempo después de un error se queda el widget en su tesela (urgente). 0: nunca.",
+                "de": "Wie lange das Widget nach einem Fehler auf seiner Kachel bleibt (dringend). 0: nie.",
+                "zh-Hans": "出错后小组件在格子上停留多久（紧急）。0：从不。",
+                "zh-Hant": "出錯後小工具在方格上停留多久（緊急）。0：從不。"
+              },
+              "unit": "ms"
+            },
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400000
+          }
+        }
+      },
+      "screenshot": "docs/rate.png",
+      "animated": false,
+      "urgent": true
+    },
+    {
+      "type": "logs/last-error",
+      "name": {
+        "en": "Last error",
+        "es": "Último error",
+        "de": "Letzter Fehler",
+        "zh-Hans": "最近的错误",
+        "zh-Hant": "最近的錯誤"
+      },
+      "description": {
+        "en": "The last error of your logs, big, with where and when: for a small tile.",
+        "es": "El último error de tus logs, en grande, con dónde y cuándo: para una tesela pequeña.",
+        "de": "Der letzte Fehler deiner Logs, groß, mit wo und wann: für eine kleine Kachel.",
+        "zh-Hans": "日志中最近的一条错误，大字显示来源和时间：适合小格子。",
+        "zh-Hant": "日誌中最近的一則錯誤，大字顯示來源與時間：適合小方格。"
+      },
+      "icon": "octagon-alert",
+      "category": "system",
+      "tags": [
+        "logs",
+        "errors"
+      ],
+      "size": {
+        "min": {
+          "w": 160,
+          "h": 80
+        },
+        "preferred": {
+          "w": 420,
+          "h": 200
+        }
+      },
+      "chrome": "card",
+      "sources": [
+        "logs/journal",
+        "logs/file",
+        "logs/docker",
+        "logs/macos",
+        "logs/windows",
+        "logs/kubernetes",
+        "logs/loki"
+      ],
+      "options": {
+        "default": {
+          "units": [],
+          "messages": [],
+          "includeWarnings": false,
+          "holdMs": 120000
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "units": {
+            "title": "Units, containers, files",
+            "description": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Units, containers, files",
+                "es": "Unidades, contenedores, archivos",
+                "de": "Units, Container, Dateien",
+                "zh-Hans": "单元、容器、文件",
+                "zh-Hant": "單元、容器、檔案"
+              },
+              "help": {
+                "en": "Which logs to show, by name: nginx.service, web, app.log; by kind: journal/*, docker/*, file/*; and !cron to leave one out. Empty: all.",
+                "es": "Qué logs mostrar, por nombre: nginx.service, web, app.log; por tipo: journal/*, docker/*, file/*; y !cron para quitar uno. Vacío: todos.",
+                "de": "Welche Logs gezeigt werden, nach Name: nginx.service, web, app.log; nach Art: journal/*, docker/*, file/*; und !cron, um eines wegzulassen. Leer: alle.",
+                "zh-Hans": "按名称选择要显示的日志：nginx.service、web、app.log；按类型：journal/*、docker/*、file/*；用 !cron 排除某个。留空：全部。",
+                "zh-Hant": "依名稱選擇要顯示的日誌：nginx.service、web、app.log；依類型：journal/*、docker/*、file/*；用 !cron 排除某個。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "messages": {
+            "title": "Messages",
+            "description": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Messages",
+                "es": "Mensajes",
+                "de": "Meldungen",
+                "zh-Hans": "消息",
+                "zh-Hant": "訊息"
+              },
+              "help": {
+                "en": "Only lines with these words: timeout, refused; leave out with !healthcheck; a regular expression between slashes: /5\\d\\d/. Empty: all lines.",
+                "es": "Solo las líneas con estas palabras: timeout, refused; quita con !healthcheck; una expresión regular entre barras: /5\\d\\d/. Vacío: todas.",
+                "de": "Nur Zeilen mit diesen Wörtern: timeout, refused; weglassen mit !healthcheck; ein regulärer Ausdruck zwischen Schrägstrichen: /5\\d\\d/. Leer: alle Zeilen.",
+                "zh-Hans": "只显示含这些词的行：timeout、refused；用 !healthcheck 排除；斜杠之间写正则表达式：/5\\d\\d/。留空：全部。",
+                "zh-Hant": "只顯示含這些詞的行：timeout、refused；用 !healthcheck 排除；斜線之間寫正規表示式：/5\\d\\d/。留空：全部。"
+              },
+              "widget": "filter"
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*"
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "includeWarnings": {
+            "title": "Include warnings",
+            "default": false,
+            "x-ui": {
+              "label": {
+                "en": "Include warnings",
+                "es": "Incluir avisos",
+                "de": "Warnungen einbeziehen",
+                "zh-Hans": "包括警告",
+                "zh-Hant": "包括警告"
+              }
+            },
+            "type": "boolean"
+          },
+          "holdMs": {
+            "title": "An error keeps the tile for",
+            "description": "How long after an error the widget stays on its tile (urgent). 0: never.",
+            "default": 120000,
+            "x-ui": {
+              "label": {
+                "en": "An error keeps the tile for",
+                "es": "Un error se queda la tesela",
+                "de": "Ein Fehler hält die Kachel für",
+                "zh-Hans": "出错后占用格子",
+                "zh-Hant": "出錯後佔用方格"
+              },
+              "help": {
+                "en": "How long after an error the widget stays on its tile (urgent). 0: never.",
+                "es": "Cuánto tiempo después de un error se queda el widget en su tesela (urgente). 0: nunca.",
+                "de": "Wie lange das Widget nach einem Fehler auf seiner Kachel bleibt (dringend). 0: nie.",
+                "zh-Hans": "出错后小组件在格子上停留多久（紧急）。0：从不。",
+                "zh-Hant": "出錯後小工具在方格上停留多久（緊急）。0：從不。"
+              },
+              "unit": "ms"
+            },
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400000
+          }
+        }
+      },
+      "screenshot": "docs/last-error.png",
+      "animated": false,
+      "urgent": true
+    }
+  ],
+  "sources": [
+    {
+      "type": "logs/journal",
+      "name": {
+        "en": "systemd journal",
+        "es": "Diario de systemd",
+        "de": "systemd-Journal",
+        "zh-Hans": "systemd 日志",
+        "zh-Hant": "systemd 日誌"
+      },
+      "description": {
+        "en": "Follows the journal with journalctl, as it is written (Linux). Without the systemd-journal or adm group you see only your own user’s messages.",
+        "es": "Sigue el diario con journalctl, según se escribe (Linux). Sin el grupo systemd-journal o adm solo ves los mensajes de tu usuario.",
+        "de": "Folgt dem Journal mit journalctl, während es geschrieben wird (Linux). Ohne die Gruppe systemd-journal oder adm siehst du nur die Meldungen deines Benutzers.",
+        "zh-Hans": "用 journalctl 实时跟踪日志（Linux）。不在 systemd-journal 或 adm 组中时，只能看到你自己用户的消息。",
+        "zh-Hant": "用 journalctl 即時追蹤日誌（Linux）。不在 systemd-journal 或 adm 群組中時，只能看到你自己使用者的訊息。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "units": [],
+          "priority": "info",
+          "onlyUser": false,
+          "bin": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "units": {
+            "title": "Units",
+            "description": "Empty: all. Names or patterns, comma-separated: * matches anything, a leading ! leaves out (web, acme/*, !*-old).",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Units",
+                "es": "Unidades",
+                "de": "Units",
+                "zh-Hans": "单元",
+                "zh-Hant": "單元"
+              },
+              "help": {
+                "en": "Empty: all. Names or patterns, comma-separated: * matches anything, a leading ! leaves out (web, acme/*, !*-old).",
+                "es": "Vacío: todos. Nombres o patrones separados por comas: * vale por cualquier cosa y un ! delante excluye (web, acme/*, !*-old).",
+                "de": "Leer: alle. Namen oder Muster, durch Kommas getrennt: * steht für alles, ein ! davor schließt aus (web, acme/*, !*-old).",
+                "zh-Hant": "留空：全部。填入名稱或模式，以逗號分隔：* 代表任意字元，開頭加 ! 則排除（web, acme/*, !*-old）。",
+                "zh-Hans": "留空：全部。填写名称或模式，用逗号分隔：* 匹配任意内容，开头加 ! 表示排除（web, acme/*, !*-old）。"
+              },
+              "widget": "filter",
+              "choices": {
+                "source": "logs/journal",
+                "list": "units"
+              }
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*",
+                "choices": {
+                  "source": "logs/journal",
+                  "list": "units"
+                }
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "priority": {
+            "title": "Read from",
+            "description": "The least serious messages journalctl reads. Each widget can show fewer.",
+            "default": "info",
+            "x-ui": {
+              "label": {
+                "en": "Read from",
+                "es": "Leer desde",
+                "de": "Lesen ab",
+                "zh-Hans": "读取级别",
+                "zh-Hant": "讀取層級"
+              },
+              "help": {
+                "en": "The least serious messages journalctl reads. Each widget can show fewer.",
+                "es": "Los mensajes menos graves que lee journalctl. Cada widget puede mostrar menos.",
+                "de": "Die am wenigsten ernsten Meldungen, die journalctl liest. Jedes Widget kann weniger zeigen.",
+                "zh-Hans": "journalctl 读取的最低级别消息。每个小组件可以显示更少。",
+                "zh-Hant": "journalctl 讀取的最低層級訊息。每個小工具可以顯示更少。"
+              },
+              "labels": {
+                "error": {
+                  "en": "Errors",
+                  "es": "Errores",
+                  "de": "Fehler",
+                  "zh-Hans": "错误",
+                  "zh-Hant": "錯誤"
+                },
+                "warning": {
+                  "en": "Warnings and worse",
+                  "es": "Avisos y peor",
+                  "de": "Warnungen und schlimmer",
+                  "zh-Hans": "警告及以上",
+                  "zh-Hant": "警告及以上"
+                },
+                "notice": {
+                  "en": "Notices and worse",
+                  "es": "Notas y peor",
+                  "de": "Hinweise und schlimmer",
+                  "zh-Hans": "通知及以上",
+                  "zh-Hant": "通知及以上"
+                },
+                "info": {
+                  "en": "Information and worse",
+                  "es": "Información y peor",
+                  "de": "Informationen und schlimmer",
+                  "zh-Hans": "信息及以上",
+                  "zh-Hant": "資訊及以上"
+                },
+                "debug": {
+                  "en": "Everything (debug too)",
+                  "es": "Todo (también depuración)",
+                  "de": "Alles (auch Debug)",
+                  "zh-Hans": "全部（包括调试）",
+                  "zh-Hant": "全部（包括除錯）"
+                }
+              }
+            },
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "notice",
+              "info",
+              "debug"
+            ]
+          },
+          "onlyUser": {
+            "title": "Only my user’s journal",
+            "description": "journalctl --user: your user services, not the system’s.",
+            "default": false,
+            "x-ui": {
+              "label": {
+                "en": "Only my user’s journal",
+                "es": "Solo el diario de mi usuario",
+                "de": "Nur das Journal meines Benutzers",
+                "zh-Hans": "仅我的用户日志",
+                "zh-Hant": "僅我的使用者日誌"
+              },
+              "help": {
+                "en": "journalctl --user: your user services, not the system’s.",
+                "es": "journalctl --user: tus servicios de usuario, no los del sistema.",
+                "de": "journalctl --user: deine Benutzerdienste, nicht die des Systems.",
+                "zh-Hans": "journalctl --user：你的用户服务，而不是系统的。",
+                "zh-Hant": "journalctl --user：你的使用者服務，而不是系統的。"
+              }
+            },
+            "type": "boolean"
+          },
+          "bin": {
+            "title": "Program",
+            "description": "The journalctl to run, by its full path. Empty: journalctl from the PATH.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Program",
+                "es": "Programa",
+                "de": "Programm",
+                "zh-Hans": "程序",
+                "zh-Hant": "程式"
+              },
+              "help": {
+                "en": "The journalctl to run, by its full path. Empty: journalctl from the PATH.",
+                "es": "El journalctl que ejecutar, con su ruta completa. Vacío: el journalctl del PATH.",
+                "de": "Das auszuführende journalctl mit vollständigem Pfad. Leer: journalctl aus dem PATH.",
+                "zh-Hans": "要运行的 journalctl 的完整路径。留空：使用 PATH 中的 journalctl。",
+                "zh-Hant": "要執行的 journalctl 的完整路徑。留空：使用 PATH 中的 journalctl。"
+              },
+              "advanced": true,
+              "placeholder": "journalctl"
+            },
+            "x-risk": "exec",
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/file",
+      "name": {
+        "en": "Log files",
+        "es": "Archivos de log",
+        "de": "Logdateien",
+        "zh-Hans": "日志文件",
+        "zh-Hant": "日誌檔"
+      },
+      "description": {
+        "en": "Follows the end of log files, like tail -F: it survives rotation and truncation and waits for a file that isn’t there yet.",
+        "es": "Sigue el final de archivos de log, como tail -F: sobrevive a la rotación y al vaciado y espera a un archivo que aún no existe.",
+        "de": "Folgt dem Ende von Logdateien wie tail -F: übersteht Rotation und Kürzen und wartet auf eine Datei, die es noch nicht gibt.",
+        "zh-Hans": "像 tail -F 一样跟踪日志文件的末尾：能应对轮转和清空，并等待尚不存在的文件。",
+        "zh-Hant": "像 tail -F 一樣追蹤日誌檔的結尾：能應付輪替與清空，並等待尚不存在的檔案。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "paths": []
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "paths": {
+            "title": "Files",
+            "description": "One or more log files, by their full path. Empty: none is read.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Files",
+                "es": "Archivos",
+                "de": "Dateien",
+                "zh-Hans": "文件",
+                "zh-Hant": "檔案"
+              },
+              "help": {
+                "en": "One or more log files, by their full path. Empty: none is read.",
+                "es": "Uno o más archivos de log, con su ruta completa. Vacío: no se lee ninguno.",
+                "de": "Eine oder mehrere Logdateien mit vollständigem Pfad. Leer: keine wird gelesen.",
+                "zh-Hans": "一个或多个日志文件的完整路径。留空：不读取任何文件。",
+                "zh-Hant": "一個或多個日誌檔的完整路徑。留空：不讀取任何檔案。"
+              }
+            },
+            "x-risk": "path",
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "/var/log/nginx/error.log",
+                "format": "path"
+              },
+              "x-risk": "path",
+              "type": "string"
+            },
+            "maxItems": 20
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/docker",
+      "name": {
+        "en": "Docker containers",
+        "es": "Contenedores Docker",
+        "de": "Docker-Container",
+        "zh-Hans": "Docker 容器",
+        "zh-Hant": "Docker 容器"
+      },
+      "description": {
+        "en": "Follows the logs of the containers you choose, through Docker’s socket. Access to that socket is root access to the machine: give it only on a machine you trust.",
+        "es": "Sigue los logs de los contenedores que elijas, por el socket de Docker. Acceder a ese socket es acceder como root a la máquina: dáselo solo en una máquina de confianza.",
+        "de": "Folgt den Logs der gewählten Container über Dockers Socket. Zugriff auf diesen Socket ist Root-Zugriff auf den Rechner: nur auf einem Rechner geben, dem du vertraust.",
+        "zh-Hans": "通过 Docker 的套接字跟踪你选择的容器的日志。能访问这个套接字就等于拥有这台机器的 root 权限：只在你信任的机器上开启。",
+        "zh-Hant": "透過 Docker 的 socket 追蹤你選擇的容器日誌。能存取這個 socket 就等於擁有這台機器的 root 權限：只在你信任的機器上開啟。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "containers": [],
+          "socket": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "containers": {
+            "title": "Containers",
+            "description": "Which running containers to follow, by name or Compose service: web, db-*, !*-test. Empty: none, Docker is not read; * for all.",
+            "default": [],
+            "x-ui": {
+              "label": {
+                "en": "Containers",
+                "es": "Contenedores",
+                "de": "Container",
+                "zh-Hans": "容器",
+                "zh-Hant": "容器"
+              },
+              "help": {
+                "en": "Which running containers to follow, by name or Compose service: web, db-*, !*-test. Empty: none, Docker is not read; * for all.",
+                "es": "Qué contenedores en marcha seguir, por nombre o servicio de Compose: web, db-*, !*-test. Vacío: ninguno, no se lee Docker; * para todos.",
+                "de": "Welche laufenden Container verfolgt werden, nach Name oder Compose-Dienst: web, db-*, !*-test. Leer: keiner, Docker wird nicht gelesen; * für alle.",
+                "zh-Hans": "要跟踪哪些运行中的容器（按名称或 Compose 服务）：web, db-*, !*-test。留空：不读取 Docker；* 表示全部。",
+                "zh-Hant": "要追蹤哪些執行中的容器（依名稱或 Compose 服務）：web, db-*, !*-test。留空：不讀取 Docker；* 表示全部。"
+              },
+              "widget": "filter",
+              "choices": {
+                "source": "logs/docker",
+                "list": "units"
+              }
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "name, group/*, !old-*",
+                "choices": {
+                  "source": "logs/docker",
+                  "list": "units"
+                }
+              },
+              "type": "string"
+            },
+            "x-filter": true
+          },
+          "socket": {
+            "title": "Docker socket",
+            "description": "Empty: DOCKER_HOST, else rootless Docker’s ($XDG_RUNTIME_DIR/docker.sock), Docker Desktop’s, or /var/run/docker.sock.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Docker socket",
+                "es": "Socket de Docker",
+                "de": "Docker-Socket",
+                "zh-Hans": "Docker 套接字",
+                "zh-Hant": "Docker socket"
+              },
+              "help": {
+                "en": "Empty: DOCKER_HOST, else rootless Docker’s ($XDG_RUNTIME_DIR/docker.sock), Docker Desktop’s, or /var/run/docker.sock.",
+                "es": "Vacío: DOCKER_HOST, o si no el de Docker sin root ($XDG_RUNTIME_DIR/docker.sock), el de Docker Desktop o /var/run/docker.sock.",
+                "de": "Leer: DOCKER_HOST, sonst der von rootlosem Docker ($XDG_RUNTIME_DIR/docker.sock), der von Docker Desktop oder /var/run/docker.sock.",
+                "zh-Hans": "留空：使用 DOCKER_HOST，否则依次为无 root Docker 的（$XDG_RUNTIME_DIR/docker.sock）、Docker Desktop 的或 /var/run/docker.sock。",
+                "zh-Hant": "留空：使用 DOCKER_HOST，否則依序為無 root Docker 的（$XDG_RUNTIME_DIR/docker.sock）、Docker Desktop 的或 /var/run/docker.sock。"
+              },
+              "advanced": true,
+              "placeholder": "/var/run/docker.sock",
+              "format": "path"
+            },
+            "x-risk": "path",
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/macos",
+      "name": {
+        "en": "macOS unified log",
+        "es": "Registro unificado de macOS",
+        "de": "Einheitliches macOS-Protokoll",
+        "zh-Hans": "macOS 统一日志",
+        "zh-Hant": "macOS 統一日誌"
+      },
+      "description": {
+        "en": "Follows macOS’s log with log stream. By default only errors and faults: the whole log is thousands of lines a second.",
+        "es": "Sigue el registro de macOS con log stream. Por omisión solo errores y fallos: el registro entero son miles de líneas por segundo.",
+        "de": "Folgt dem macOS-Protokoll mit log stream. Standardmäßig nur Fehler: das ganze Protokoll sind Tausende Zeilen pro Sekunde.",
+        "zh-Hans": "用 log stream 跟踪 macOS 日志。默认只看错误和故障：完整日志每秒有成千上万行。",
+        "zh-Hant": "用 log stream 追蹤 macOS 日誌。預設只看錯誤與故障：完整日誌每秒有成千上萬行。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "predicate": "messageType == error OR messageType == fault",
+          "level": "default",
+          "bin": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "predicate": {
+            "title": "Predicate",
+            "description": "Which messages, as log stream --predicate takes it: process == \"nginx\", subsystem == \"com.example.app\". Empty: all of them.",
+            "default": "messageType == error OR messageType == fault",
+            "x-ui": {
+              "label": {
+                "en": "Predicate",
+                "es": "Predicado",
+                "de": "Prädikat",
+                "zh-Hans": "谓词",
+                "zh-Hant": "述詞"
+              },
+              "help": {
+                "en": "Which messages, as log stream --predicate takes it: process == \"nginx\", subsystem == \"com.example.app\". Empty: all of them.",
+                "es": "Qué mensajes, como lo toma log stream --predicate: process == \"nginx\", subsystem == \"com.example.app\". Vacío: todos.",
+                "de": "Welche Meldungen, wie log stream --predicate es nimmt: process == \"nginx\", subsystem == \"com.example.app\". Leer: alle.",
+                "zh-Hans": "要哪些消息，按 log stream --predicate 的写法：process == \"nginx\"、subsystem == \"com.example.app\"。留空：全部。",
+                "zh-Hant": "要哪些訊息，依 log stream --predicate 的寫法：process == \"nginx\"、subsystem == \"com.example.app\"。留空：全部。"
+              }
+            },
+            "type": "string"
+          },
+          "level": {
+            "title": "Level",
+            "default": "default",
+            "x-ui": {
+              "label": {
+                "en": "Level",
+                "es": "Nivel",
+                "de": "Stufe",
+                "zh-Hans": "级别",
+                "zh-Hant": "層級"
+              },
+              "labels": {
+                "default": {
+                  "en": "Default",
+                  "es": "Normal",
+                  "de": "Standard",
+                  "zh-Hans": "默认",
+                  "zh-Hant": "預設"
+                },
+                "info": {
+                  "en": "Info too",
+                  "es": "También info",
+                  "de": "Auch Info",
+                  "zh-Hans": "包括信息",
+                  "zh-Hant": "包括資訊"
+                },
+                "debug": {
+                  "en": "Debug too",
+                  "es": "También depuración",
+                  "de": "Auch Debug",
+                  "zh-Hans": "包括调试",
+                  "zh-Hant": "包括除錯"
+                }
+              }
+            },
+            "type": "string",
+            "enum": [
+              "default",
+              "info",
+              "debug"
+            ]
+          },
+          "bin": {
+            "title": "Program",
+            "description": "The /usr/bin/log to run, by its full path. Empty: /usr/bin/log from the PATH.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Program",
+                "es": "Programa",
+                "de": "Programm",
+                "zh-Hans": "程序",
+                "zh-Hant": "程式"
+              },
+              "help": {
+                "en": "The /usr/bin/log to run, by its full path. Empty: /usr/bin/log from the PATH.",
+                "es": "El /usr/bin/log que ejecutar, con su ruta completa. Vacío: el /usr/bin/log del PATH.",
+                "de": "Das auszuführende /usr/bin/log mit vollständigem Pfad. Leer: /usr/bin/log aus dem PATH.",
+                "zh-Hans": "要运行的 /usr/bin/log 的完整路径。留空：使用 PATH 中的 /usr/bin/log。",
+                "zh-Hant": "要執行的 /usr/bin/log 的完整路徑。留空：使用 PATH 中的 /usr/bin/log。"
+              },
+              "advanced": true,
+              "placeholder": "/usr/bin/log"
+            },
+            "x-risk": "exec",
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/windows",
+      "name": {
+        "en": "Windows Event Log",
+        "es": "Visor de eventos de Windows",
+        "de": "Windows-Ereignisprotokoll",
+        "zh-Hans": "Windows 事件日志",
+        "zh-Hant": "Windows 事件記錄"
+      },
+      "description": {
+        "en": "New events of the Windows logs you choose, read with PowerShell’s Get-WinEvent every 15 seconds.",
+        "es": "Los eventos nuevos de los registros de Windows que elijas, leídos con Get-WinEvent de PowerShell cada 15 segundos.",
+        "de": "Neue Ereignisse der gewählten Windows-Protokolle, alle 15 Sekunden mit Get-WinEvent aus PowerShell gelesen.",
+        "zh-Hans": "你选择的 Windows 日志中的新事件，每 15 秒用 PowerShell 的 Get-WinEvent 读取一次。",
+        "zh-Hant": "你選擇的 Windows 記錄中的新事件，每 15 秒用 PowerShell 的 Get-WinEvent 讀取一次。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "logs": [
+            "System",
+            "Application"
+          ],
+          "priority": "warning",
+          "bin": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "logs": {
+            "title": "Logs",
+            "description": "Event log names: System, Application, Security (needs an administrator)…",
+            "default": [
+              "System",
+              "Application"
+            ],
+            "x-ui": {
+              "label": {
+                "en": "Logs",
+                "es": "Registros",
+                "de": "Protokolle",
+                "zh-Hans": "日志",
+                "zh-Hant": "記錄"
+              },
+              "help": {
+                "en": "Event log names: System, Application, Security (needs an administrator)…",
+                "es": "Nombres de registro: System, Application, Security (requiere administrador)…",
+                "de": "Namen der Protokolle: System, Application, Security (braucht Administrator)…",
+                "zh-Hans": "事件日志名称：System、Application、Security（需要管理员）…",
+                "zh-Hant": "事件記錄名稱：System、Application、Security（需要系統管理員）…"
+              }
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {},
+              "type": "string"
+            },
+            "maxItems": 10
+          },
+          "priority": {
+            "title": "Read from",
+            "default": "warning",
+            "x-ui": {
+              "label": {
+                "en": "Read from",
+                "es": "Leer desde",
+                "de": "Lesen ab",
+                "zh-Hans": "读取级别",
+                "zh-Hant": "讀取層級"
+              },
+              "labels": {
+                "error": {
+                  "en": "Errors",
+                  "es": "Errores",
+                  "de": "Fehler",
+                  "zh-Hans": "错误",
+                  "zh-Hant": "錯誤"
+                },
+                "warning": {
+                  "en": "Warnings and worse",
+                  "es": "Avisos y peor",
+                  "de": "Warnungen und schlimmer",
+                  "zh-Hans": "警告及以上",
+                  "zh-Hant": "警告及以上"
+                },
+                "info": {
+                  "en": "Information and worse",
+                  "es": "Información y peor",
+                  "de": "Informationen und schlimmer",
+                  "zh-Hans": "信息及以上",
+                  "zh-Hant": "資訊及以上"
+                }
+              }
+            },
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "bin": {
+            "title": "Program",
+            "description": "The powershell.exe to run, by its full path. Empty: powershell.exe from the PATH.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Program",
+                "es": "Programa",
+                "de": "Programm",
+                "zh-Hans": "程序",
+                "zh-Hant": "程式"
+              },
+              "help": {
+                "en": "The powershell.exe to run, by its full path. Empty: powershell.exe from the PATH.",
+                "es": "El powershell.exe que ejecutar, con su ruta completa. Vacío: el powershell.exe del PATH.",
+                "de": "Das auszuführende powershell.exe mit vollständigem Pfad. Leer: powershell.exe aus dem PATH.",
+                "zh-Hans": "要运行的 powershell.exe 的完整路径。留空：使用 PATH 中的 powershell.exe。",
+                "zh-Hant": "要執行的 powershell.exe 的完整路徑。留空：使用 PATH 中的 powershell.exe。"
+              },
+              "advanced": true,
+              "placeholder": "powershell.exe"
+            },
+            "x-risk": "exec",
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/kubernetes",
+      "name": {
+        "en": "Kubernetes pods",
+        "es": "Pods de Kubernetes",
+        "de": "Kubernetes-Pods",
+        "zh-Hans": "Kubernetes Pod",
+        "zh-Hant": "Kubernetes Pod"
+      },
+      "description": {
+        "en": "Follows pods’ logs with kubectl logs -f, with your kubeconfig and its permissions.",
+        "es": "Sigue los logs de pods con kubectl logs -f, con tu kubeconfig y sus permisos.",
+        "de": "Folgt den Logs von Pods mit kubectl logs -f, mit deiner kubeconfig und ihren Rechten.",
+        "zh-Hans": "用 kubectl logs -f 跟踪 Pod 日志，使用你的 kubeconfig 及其权限。",
+        "zh-Hant": "用 kubectl logs -f 追蹤 Pod 日誌，使用你的 kubeconfig 及其權限。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "selector": "",
+          "namespace": "",
+          "context": "",
+          "bin": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "selector": {
+            "title": "Pods",
+            "description": "A label selector (app=shop) or a resource (deployment/shop). Empty: kubectl is not run.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Pods",
+                "es": "Pods",
+                "de": "Pods",
+                "zh-Hans": "Pod",
+                "zh-Hant": "Pod"
+              },
+              "help": {
+                "en": "A label selector (app=shop) or a resource (deployment/shop). Empty: kubectl is not run.",
+                "es": "Un selector de etiquetas (app=shop) o un recurso (deployment/shop). Vacío: no se ejecuta kubectl.",
+                "de": "Ein Label-Selektor (app=shop) oder eine Ressource (deployment/shop). Leer: kubectl wird nicht ausgeführt.",
+                "zh-Hans": "标签选择器（app=shop）或资源（deployment/shop）。留空：不运行 kubectl。",
+                "zh-Hant": "標籤選擇器（app=shop）或資源（deployment/shop）。留空：不執行 kubectl。"
+              },
+              "placeholder": "app=shop"
+            },
+            "type": "string"
+          },
+          "namespace": {
+            "title": "Namespace",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Namespace",
+                "es": "Espacio de nombres",
+                "de": "Namespace",
+                "zh-Hans": "命名空间",
+                "zh-Hant": "命名空間"
+              }
+            },
+            "type": "string"
+          },
+          "context": {
+            "title": "kubeconfig context",
+            "description": "Empty: the current one.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "kubeconfig context",
+                "es": "Contexto de kubeconfig",
+                "de": "kubeconfig-Kontext",
+                "zh-Hans": "kubeconfig 上下文",
+                "zh-Hant": "kubeconfig 內容"
+              },
+              "help": {
+                "en": "Empty: the current one.",
+                "es": "Vacío: el actual.",
+                "de": "Leer: der aktuelle.",
+                "zh-Hans": "留空：当前上下文。",
+                "zh-Hant": "留空：目前的內容。"
+              },
+              "advanced": true
+            },
+            "x-risk": "network",
+            "type": "string"
+          },
+          "bin": {
+            "title": "Program",
+            "description": "The kubectl to run, by its full path. Empty: kubectl from the PATH.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Program",
+                "es": "Programa",
+                "de": "Programm",
+                "zh-Hans": "程序",
+                "zh-Hant": "程式"
+              },
+              "help": {
+                "en": "The kubectl to run, by its full path. Empty: kubectl from the PATH.",
+                "es": "El kubectl que ejecutar, con su ruta completa. Vacío: el kubectl del PATH.",
+                "de": "Das auszuführende kubectl mit vollständigem Pfad. Leer: kubectl aus dem PATH.",
+                "zh-Hans": "要运行的 kubectl 的完整路径。留空：使用 PATH 中的 kubectl。",
+                "zh-Hant": "要執行的 kubectl 的完整路徑。留空：使用 PATH 中的 kubectl。"
+              },
+              "advanced": true,
+              "placeholder": "kubectl"
+            },
+            "x-risk": "exec",
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "logs/loki",
+      "name": {
+        "en": "Grafana Loki",
+        "es": "Grafana Loki",
+        "de": "Grafana Loki",
+        "zh-Hans": "Grafana Loki",
+        "zh-Hant": "Grafana Loki"
+      },
+      "description": {
+        "en": "Live lines of a LogQL query, through Loki’s tail API.",
+        "es": "Las líneas en vivo de una consulta LogQL, por la API de tail de Loki.",
+        "de": "Live-Zeilen einer LogQL-Abfrage über Lokis Tail-API.",
+        "zh-Hans": "通过 Loki 的 tail API 获取 LogQL 查询的实时日志行。",
+        "zh-Hant": "透過 Loki 的 tail API 取得 LogQL 查詢的即時日誌行。"
+      },
+      "polled": false,
+      "options": {
+        "default": {
+          "url": "",
+          "query": "",
+          "token": "",
+          "orgId": ""
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "url": {
+            "title": "Loki address",
+            "description": "Empty: Loki is not contacted.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Loki address",
+                "es": "Dirección de Loki",
+                "de": "Loki-Adresse",
+                "zh-Hans": "Loki 地址",
+                "zh-Hant": "Loki 位址"
+              },
+              "help": {
+                "en": "Empty: Loki is not contacted.",
+                "es": "Vacío: no se contacta con Loki.",
+                "de": "Leer: Loki wird nicht kontaktiert.",
+                "zh-Hans": "留空：不连接 Loki。",
+                "zh-Hant": "留空：不連線 Loki。"
+              },
+              "placeholder": "http://loki.example.lan:3100",
+              "format": "url"
+            },
+            "x-risk": "network",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query (LogQL)",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Query (LogQL)",
+                "es": "Consulta (LogQL)",
+                "de": "Abfrage (LogQL)",
+                "zh-Hans": "查询（LogQL）",
+                "zh-Hant": "查詢（LogQL）"
+              },
+              "placeholder": "{job=\"nginx\"} |= \"error\""
+            },
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "description": "Sent as Authorization: Bearer. Or put user:password in the address. Secret: leave it empty (or a placeholder such as \"<token>\"). Kiosko keeps the value it already has, or asks for it in the editor.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Token",
+                "es": "Token",
+                "de": "Token",
+                "zh-Hans": "令牌",
+                "zh-Hant": "權杖"
+              },
+              "help": {
+                "en": "Sent as Authorization: Bearer. Or put user:password in the address.",
+                "es": "Se envía como Authorization: Bearer. O pon usuario:contraseña en la dirección.",
+                "de": "Wird als Authorization: Bearer gesendet. Oder Benutzer:Passwort in die Adresse.",
+                "zh-Hans": "作为 Authorization: Bearer 发送。也可以在地址里写 用户:密码。",
+                "zh-Hant": "以 Authorization: Bearer 傳送。也可以在位址裡寫 使用者:密碼。"
+              },
+              "advanced": true,
+              "secret": true
+            },
+            "x-secret": true,
+            "type": "string"
+          },
+          "orgId": {
+            "title": "Tenant (X-Scope-OrgID)",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Tenant (X-Scope-OrgID)",
+                "es": "Inquilino (X-Scope-OrgID)",
+                "de": "Mandant (X-Scope-OrgID)",
+                "zh-Hans": "租户（X-Scope-OrgID）",
+                "zh-Hant": "租戶（X-Scope-OrgID）"
+              },
+              "advanced": true
+            },
+            "type": "string"
+          }
+        }
+      }
+    }
+  ],
+  "interludes": [],
+  "templates": []
+}
