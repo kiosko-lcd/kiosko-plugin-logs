@@ -9,12 +9,12 @@
     "zh-Hans": "日志",
     "zh-Hant": "日誌"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": {
     "en": "Live logs on your panel: journald, log files, Docker, macOS, Windows, Kubernetes and Loki. Errors show as they happen, repeats fold, secrets are masked.",
     "es": "Logs en vivo en tu panel: journald, archivos de log, Docker, macOS, Windows, Kubernetes y Loki. Los errores aparecen según ocurren, las repeticiones se agrupan y los secretos se ocultan.",
     "de": "Live-Logs auf deinem Panel: journald, Logdateien, Docker, macOS, Windows, Kubernetes und Loki. Fehler erscheinen sofort, Wiederholungen werden zusammengefasst, Geheimnisse maskiert.",
-    "zh-Hans": "在面板上实时查看日志：journald、日志文件、Docker、macOS、Windows、Kubernetes 和 Loki。错误即时出现，重复行合并，机密信息被遮盖。",
+    "zh-Hans": "在副屏上实时查看日志：journald、日志文件、Docker、macOS、Windows、Kubernetes 和 Loki。错误即时出现，重复行合并，机密信息被遮盖。",
     "zh-Hant": "在面板上即時查看日誌：journald、日誌檔、Docker、macOS、Windows、Kubernetes 與 Loki。錯誤即時出現，重複行合併，機密資訊被遮蓋。"
   },
   "author": "Loksly",
@@ -1442,14 +1442,14 @@
                 "es": "Contexto de kubeconfig",
                 "de": "kubeconfig-Kontext",
                 "zh-Hans": "kubeconfig 上下文",
-                "zh-Hant": "kubeconfig 內容"
+                "zh-Hant": "kubeconfig 上下文"
               },
               "help": {
                 "en": "Empty: the current one.",
                 "es": "Vacío: el actual.",
                 "de": "Leer: der aktuelle.",
                 "zh-Hans": "留空：当前上下文。",
-                "zh-Hant": "留空：目前的內容。"
+                "zh-Hant": "留空：目前的上下文。"
               },
               "advanced": true
             },
