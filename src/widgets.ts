@@ -293,7 +293,7 @@ export const rate = defineWidget({
     // The number and what it counts: at the left of a wide tile, above the curve otherwise.
     const numH = side ? Math.min(box.h * 0.5, box.w * 0.16) : Math.min(box.h * 0.34, box.w * 0.22);
     // ctx.plural is Kiosko 0.2.6's; before it, the plural form is enough.
-    const plural = (ctx as { plural?: (n: number, forms: Record<string, Record<string, string>>) => string }).plural;
+    const plural = (ctx as unknown as { plural?: (n: number, forms: Record<string, Record<string, string>>) => string }).plural;
     const forms = {
       en: { one: 'error in {span}', other: 'errors in {span}' },
       es: { one: 'error en {span}', other: 'errores en {span}' },
