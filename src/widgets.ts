@@ -93,7 +93,7 @@ function emptyMessage(ctx: RenderContext<any, any>, quiet: string): string {
   const bad = st.find((s) => s.status.state === 'error') ?? st.find((s) => s.status.state === 'waiting');
   if (bad?.status.message) return bad.status.message;
   if (!st.length) return ctx.t(L('Waiting for the logs…', 'Esperando a los logs…', 'Warte auf die Logs…', '正在等待日志…', '正在等待日誌…'));
-  return ctx.t(L('Nothing to follow: set a log up in Settings → Data sources', 'Nada que seguir: configura un log en Ajustes → Fuentes de datos', 'Nichts zu verfolgen: richte ein Log unter Einstellungen → Datenquellen ein', '没有可跟踪的：在 设置 → 数据源 中配置日志', '沒有可追蹤的：在 設定 → 資料來源 中設定日誌'));
+  return ctx.t(L('Nothing to follow: set a log up in Settings → Data sources', 'Nada que seguir: configura un log en Ajustes → Fuentes de datos', 'Nichts zu verfolgen: richte ein Log unter Einstellungen → Datenquellen ein', '没有可跟踪的：请在“设置 → 数据源”中配置日志', '沒有可追蹤的：請在「設定 → 資料來源」中設定日誌'));
 }
 
 /* Drawing helpers --------------------------------------------------------------------------------- */

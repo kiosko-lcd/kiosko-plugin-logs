@@ -310,7 +310,7 @@ export const kubernetes = defineSource({
       help: L('A label selector (app=shop) or a resource (deployment/shop). Empty: kubectl is not run.', 'Un selector de etiquetas (app=shop) o un recurso (deployment/shop). Vacío: no se ejecuta kubectl.', 'Ein Label-Selektor (app=shop) oder eine Ressource (deployment/shop). Leer: kubectl wird nicht ausgeführt.', '标签选择器（app=shop）或资源（deployment/shop）。留空：不运行 kubectl。', '標籤選擇器（app=shop）或資源（deployment/shop）。留空：不執行 kubectl。'),
     }),
     namespace: t.string({ default: '', label: L('Namespace', 'Espacio de nombres', 'Namespace', '命名空间', '命名空間') }),
-    context: t.string({ default: '', risk: 'network', advanced: true, label: L('kubeconfig context', 'Contexto de kubeconfig', 'kubeconfig-Kontext', 'kubeconfig 上下文', 'kubeconfig 內容'), help: L('Empty: the current one.', 'Vacío: el actual.', 'Leer: der aktuelle.', '留空：当前上下文。', '留空：目前的內容。') }),
+    context: t.string({ default: '', risk: 'network', advanced: true, label: L('kubeconfig context', 'Contexto de kubeconfig', 'kubeconfig-Kontext', 'kubeconfig 上下文', 'kubeconfig 上下文'), help: L('Empty: the current one.', 'Vacío: el actual.', 'Leer: der aktuelle.', '留空：当前上下文。', '留空：目前的上下文。') }),
     bin: binField('kubectl'),
   }),
   watch: watchWith('kubernetes', (o, h) => (o.selector.trim() ? followKube(o, h) : { state: 'off', message: 'no pods chosen' })),

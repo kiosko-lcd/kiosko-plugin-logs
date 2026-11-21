@@ -16,12 +16,12 @@ export { tail, rate, last } from './widgets.ts';
 export default definePlugin({
   id: 'logs',
   name: L('Logs', 'Logs', 'Logs', '日志', '日誌'),
-  version: '0.1.0',
+  version: '0.1.1',
   description: L(
     'Live logs on your panel: journald, log files, Docker, macOS, Windows, Kubernetes and Loki. Errors show as they happen, repeats fold, secrets are masked.',
     'Logs en vivo en tu panel: journald, archivos de log, Docker, macOS, Windows, Kubernetes y Loki. Los errores aparecen según ocurren, las repeticiones se agrupan y los secretos se ocultan.',
     'Live-Logs auf deinem Panel: journald, Logdateien, Docker, macOS, Windows, Kubernetes und Loki. Fehler erscheinen sofort, Wiederholungen werden zusammengefasst, Geheimnisse maskiert.',
-    '在面板上实时查看日志：journald、日志文件、Docker、macOS、Windows、Kubernetes 和 Loki。错误即时出现，重复行合并，机密信息被遮盖。',
+    '在副屏上实时查看日志：journald、日志文件、Docker、macOS、Windows、Kubernetes 和 Loki。错误即时出现，重复行合并，机密信息被遮盖。',
     '在面板上即時查看日誌：journald、日誌檔、Docker、macOS、Windows、Kubernetes 與 Loki。錯誤即時出現，重複行合併，機密資訊被遮蓋。',
   ),
   author: 'Loksly',
