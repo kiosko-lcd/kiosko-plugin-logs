@@ -10,7 +10,7 @@
  */
 import { existsSync } from 'node:fs';
 import { request } from 'node:http';
-import { join } from 'node:path';
+import { posix } from 'node:path';
 
 /**
  * Where Docker listens, when the user didn't say: `DOCKER_HOST` if it is a
@@ -25,9 +25,10 @@ export function defaultDockerSocket(o: { env?: NodeJS.ProcessEnv; platform?: Nod
   if (host.startsWith('unix://')) return host.slice('unix://'.length);
   if (host.startsWith('npipe://')) return host.slice('npipe://'.length).replace(/\//g, '\\');
   if (platform === 'win32') return '\\\\.\\pipe\\docker_engine';
+  // Unix paths, whatever system this runs on (the tests ask as Linux or macOS from Windows too).
   const candidates = [
-    env.XDG_RUNTIME_DIR ? join(env.XDG_RUNTIME_DIR, 'docker.sock') : '',
-    (o.home ?? env.HOME) ? join((o.home ?? env.HOME)!, '.docker', 'run', 'docker.sock') : '',
+    env.XDG_RUNTIME_DIR ? posix.join(env.XDG_RUNTIME_DIR, 'docker.sock') : '',
+    (o.home ?? env.HOME) ? posix.join((o.home ?? env.HOME)!, '.docker', 'run', 'docker.sock') : '',
     '/var/run/docker.sock',
   ].filter(Boolean);
   return candidates.find((p) => exists(p)) ?? '/var/run/docker.sock';
