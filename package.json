@@ -4,7 +4,7 @@
   "description": "Live logs on your Kiosko panel: journald, files, Docker, macOS, Windows, Kubernetes and Loki, with errors showing as they happen and secrets masked.",
   "type": "module",
   "license": "MIT",
-  "author": "Loksly",
+  "author": "Loksly <info@kioskolcd.dev> (https://kioskolcd.dev)",
   "keywords": [
     "kiosko",
     "kiosko-plugin",
