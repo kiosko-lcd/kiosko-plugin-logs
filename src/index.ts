@@ -16,7 +16,7 @@ export { tail, rate, last } from './widgets.ts';
 export default definePlugin({
   id: 'logs',
   name: L('Logs', 'Logs', 'Logs', '日志', '日誌'),
-  version: '0.1.1',
+  version: '0.1.2',
   description: L(
     'Live logs on your panel: journald, log files, Docker, macOS, Windows, Kubernetes and Loki. Errors show as they happen, repeats fold, secrets are masked.',
     'Logs en vivo en tu panel: journald, archivos de log, Docker, macOS, Windows, Kubernetes y Loki. Los errores aparecen según ocurren, las repeticiones se agrupan y los secretos se ocultan.',
