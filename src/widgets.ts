@@ -86,6 +86,9 @@ export function demoSources(now: number): Record<string, unknown> {
   return Object.fromEntries(kinds.map((k) => [`logs/${k}`, demoData(k, now)]));
 }
 
+/** Some log has delivered: before that the widget is loading, not empty. */
+const delivered = (sources: Record<string, unknown>) => SOURCE_IDS.some((id) => sources[id] !== undefined);
+
 /** What to say in an empty tile: why the sources have nothing, or that it's quiet. */
 function emptyMessage(ctx: RenderContext<any, any>, quiet: string): string {
   const st = statuses(ctx.sources);
@@ -185,7 +188,7 @@ export const tail = defineWidget({
   redraw: 'minute',
   urgent,
   idle,
-  empty: ({ sources, options }) => !tailLines(sources, options).length,
+  empty: ({ sources, options }) => delivered(sources) && !tailLines(sources, options).length,
   render(g, ctx) {
     const { box, options, theme, kit } = ctx;
     const lines = tailLines(ctx.sources, options);
@@ -279,6 +282,11 @@ export const rate = defineWidget({
   redraw: 'minute',
   urgent,
   idle,
+  // No log followed (off, failing or waiting) and no error kept: a flat zero would say nothing.
+  empty: ({ sources }) => {
+    const st = statuses(sources);
+    return st.length > 0 && !st.some((s) => s.status.state === 'following') && !collect(sources, 'alerts').length;
+  },
   render(g, ctx) {
     const { box, options, theme, kit, now } = ctx;
     const c = theme.colors;
@@ -397,7 +405,7 @@ export const last = defineWidget({
   redraw: 'minute',
   urgent,
   idle,
-  empty: ({ sources, options }) => !lastError(sources, options),
+  empty: ({ sources, options }) => delivered(sources) && !lastError(sources, options),
   render(g, ctx) {
     const { box, options, theme, kit, now } = ctx;
     const c = theme.colors;

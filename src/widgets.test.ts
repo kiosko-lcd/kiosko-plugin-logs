@@ -44,6 +44,22 @@ test('the tail with nothing: why, in its tile', () => {
   assert.equal(widgetState(tail, 'empty', { sources: off, now: NOW }), true);
 });
 
+test('empty: nothing to show once a log has answered, never while none has', () => {
+  const off = { 'logs/file': src('file', [], { state: 'off', message: 'no log file set' }) };
+  const quiet = { 'logs/journal': src('journal', [[5, 'info', 'cron', 'ok']]) };
+  const errors = { 'logs/journal': src('journal', [[30, 'error', 'nginx.service', 'upstream timed out']]) };
+  for (const w of [tail, rate, last]) {
+    assert.equal(widgetState(w, 'empty', { sources: {}, now: NOW }), false, `${w.id}: loading`);
+    assert.equal(widgetState(w, 'empty', { sources: off, now: NOW }), true, `${w.id}: nothing followed`);
+    assert.equal(widgetState(w, 'empty', { sources: errors, now: NOW }), false, `${w.id}: an error`);
+  }
+  assert.equal(widgetState(tail, 'empty', { sources: quiet, now: NOW }), false, 'the tail has a line');
+  assert.equal(widgetState(last, 'empty', { sources: quiet, now: NOW }), true, 'no error to show');
+  assert.equal(widgetState(rate, 'empty', { sources: quiet, now: NOW }), false, 'a quiet log is a flat curve, worth seeing');
+  const failed = { 'logs/journal': src('journal', [[600, 'error', 'backup.service', 'locked']], { state: 'error', message: 'journalctl: exited' }) };
+  assert.equal(widgetState(rate, 'empty', { sources: failed, now: NOW }), false, 'the errors kept still make a curve');
+});
+
 test('urgent while an error is fresh, idle when the logs are quiet', () => {
   const fresh = { 'logs/journal': src('journal', [[30, 'error', 'backup.service', 'repository locked']]) };
   const old = { 'logs/journal': src('journal', [[3600, 'error', 'backup.service', 'repository locked'], [60, 'info', 'cron', 'ok']]) };
